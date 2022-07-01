@@ -1,0 +1,11 @@
+# Binaries for programs and plugins
+main
+iq
+*.exe
+*.exe~
+*.so
+*.dylib
+*.dll
+vls.log
+.vscode
+bin
