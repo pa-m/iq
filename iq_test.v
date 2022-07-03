@@ -100,3 +100,24 @@ k3=v1.2.1'
 	assert a == e
 	os.rm('/tmp/test_iq.ini')?
 }
+
+fn test_modify_stdin() ? {
+	assert 0 == os.system('v run . -e .section3.k3=v1.2.1 - < fixtures/test.ini > /tmp/test_iq.ini')
+	expected := '[section1]
+k1=v1
+k2=v2
+
+[section2]
+;comment
+#comment2
+k1=v2.1
+k2=v2.2 # comment3
+
+[section3]
+k3=v1.2.1'
+	actual := os.read_file('/tmp/test_iq.ini')?
+	e := expected.split_into_lines()
+	a := actual.split_into_lines()
+	assert a == e
+	os.rm('/tmp/test_iq.ini')?
+}

@@ -110,7 +110,10 @@ fn main() {
 		println(fp.usage())
 		return
 	}
-	path := additional_args[0]
+	mut path := additional_args[0]
+	if path == '-' {
+		path = '/dev/stdin'
+	}
 	contents := os.read_file(path) or {
 		eprintln(err.str())
 		exit(1)
@@ -120,8 +123,7 @@ fn main() {
 		eprintln(err.str())
 		exit(2)
 	}
-	// println({'inplace':inplace.str(),'expr':expr,'path':path})
-	if inplace {
+	if inplace && path != '/dev/stdin' {
 		os.write_file(path, out) or {
 			eprintln(err.str())
 			exit(3)
